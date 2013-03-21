@@ -13,6 +13,7 @@ public:
     sf::Sprite getSprite();
     void setTexture(std::string texture);
     void UpdateSprite();
+    void Draw();
 private:
     sf::Sprite SpriteObject;
     std::string Texture;

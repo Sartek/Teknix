@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include "Block.hpp"
+#include "Player.hpp"
 #include "Level.hpp"
 #include "TextureManager.hpp"
 #include "ObjectManager.hpp"
@@ -32,7 +33,7 @@ private:
     static TextureManager Textures;
     static ObjectManager GameObjects;
     static Level GameLevel;
-    static Block* Box;
+    static Player* player;
     static MouseWrapper Mouse;
     static float dt;
     static float at;

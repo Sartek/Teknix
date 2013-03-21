@@ -8,6 +8,9 @@ int Game::Start()
     Game::Scale = 32;
     Game::Textures.loadTexture("../res/Box.png");
     Game::Textures.loadTexture("../res/Ground.png");
+    Game::Textures.loadTexture("../res/Player.png");
+
+    Game::player = new Player(b2Vec2(128,128),"../res/Player.png");
 
     Game::LoadLevel();
 
@@ -22,9 +25,12 @@ int Game::Start()
 
 void Game::LoadLevel()
 {
+
     for(unsigned int i=16;i < 800;i+=32) {
         Game::GameLevel.newBlock(i,600-16,32,32,"../res/Ground.png");
     }
+    //Game::GameLevel.newBlock(400,600-16,800,32,"../res/Ground.png");
+
     for(int i=16;i < 600;i+=32) {
         Game::GameLevel.newBlock(-16,i,32,32,"../res/Ground.png");
         Game::GameLevel.newBlock(816,i,32,32,"../res/Ground.png");
@@ -72,6 +78,7 @@ void Game::Update()
         {
             GameObjects.newGameObject(Game::Mouse.X(), Game::Mouse.Y(),"../res/Box.png");
         }
+        Game::player->Update();
 }
 
 void Game::Physics()
@@ -83,6 +90,7 @@ void Game::UpdateSprites()
 {
     Game::GameLevel.UpdateSprites();
     Game::GameObjects.UpdateSprites();
+    Game::player->UpdateSprite();
 }
 
 void Game::Render()
@@ -90,6 +98,7 @@ void Game::Render()
     Game::Window.clear(sf::Color(52, 72, 102));
     Game::GameLevel.DrawObjects();
     Game::GameObjects.DrawObjects();
+    Game::player->Draw();
     Game::Window.display();
 }
 
@@ -122,7 +131,7 @@ sf::RenderWindow Game::Window;
 bool Game::Exiting;
 int Game::Scale;
 b2World Game::World(b2Vec2(0.f,9.8f));
-Block* Game::Box;
+Player* Game::player;
 TextureManager Game::Textures;
 ObjectManager Game::GameObjects;
 Level Game::GameLevel;

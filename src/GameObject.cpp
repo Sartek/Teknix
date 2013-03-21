@@ -46,3 +46,8 @@ void GameObject::UpdateSprite()
     GameObject::SpriteObject.setPosition(GameObject::getPosition().x * Game::getScale(),GameObject::getPosition().y * Game::getScale());
     SpriteObject.setRotation(PhysicsObject->GetAngle() * 180/b2_pi);
 }
+
+void GameObject::Draw()
+{
+    Game::getWindow().draw(GameObject::getSprite());
+}

@@ -1,4 +1,3 @@
-
 #include "Block.hpp"
 #include "Game.hpp"
 
@@ -46,4 +45,9 @@ void Block::UpdateSprite()
 {
     Block::SpriteObject.setPosition(Block::getPosition().x * Game::getScale(),Block::getPosition().y * Game::getScale());
     SpriteObject.setRotation(PhysicsObject->GetAngle() * 180/b2_pi);
+}
+
+void Block::Draw()
+{
+    Game::getWindow().draw(Block::getSprite());
 }

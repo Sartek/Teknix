@@ -63,8 +63,12 @@
 		<Unit filename="src/Main.cpp" />
 		<Unit filename="src/MouseWrapper.cpp" />
 		<Unit filename="src/MouseWrapper.hpp" />
+		<Unit filename="src/MyContactListener.cpp" />
+		<Unit filename="src/MyContactListener.hpp" />
 		<Unit filename="src/ObjectManager.cpp" />
 		<Unit filename="src/ObjectManager.hpp" />
+		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/Player.hpp" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/TextureManager.hpp" />
 		<Extensions>

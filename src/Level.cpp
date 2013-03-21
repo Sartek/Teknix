@@ -26,6 +26,6 @@ void Level::UpdateSprites()
 void Level::DrawObjects()
 {
     for(unsigned int i=0;i < levelBlocks.size();i++) {
-        Game::getWindow().draw(levelBlocks.at(i)->getSprite());
+        levelBlocks.at(i)->Draw();
     }
 }

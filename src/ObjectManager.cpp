@@ -29,6 +29,6 @@ void ObjectManager::UpdateSprites()
 void ObjectManager::DrawObjects()
 {
     for(unsigned int i=0;i < objectList.size();i++) {
-        Game::getWindow().draw(objectList.at(i)->getSprite());
+        objectList.at(i)->Draw();
     }
 }
