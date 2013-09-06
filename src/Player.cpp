@@ -32,10 +32,13 @@ Player::Player(b2Vec2 Position,std::string texture)
 
     Player::setTexture(texture);
     SpriteObject.setOrigin(16.f, 24.f);
+    Player::TextureRect = SpriteObject.getTextureRect();
 
     Player::ContactListener = new MyContactListener;
     ContactListener->initialize();
     Game::getWorld().SetContactListener(ContactListener);
+
+    Player::Direction= 1;
 }
 
 Player::~Player()
@@ -59,6 +62,26 @@ void Player::setTexture(std::string texture)
     Player::SpriteObject.setTexture(Game::getTexture(Player::Texture));
 }
 
+// The flip function works well TODO MOVE THIS SHIT
+void Player::Flip(sf::Sprite& sprite)
+{
+    if (Player::Direction==-1)
+    {
+        sprite.setTextureRect(
+            sf::IntRect(
+                sprite.getTextureRect().width, //TODO left+width?
+                0,
+                -sprite.getTextureRect().width,
+                sprite.getTextureRect().height
+            )
+        );
+    }
+    else
+    {
+        sprite.setTextureRect(Player::TextureRect);
+    }
+}
+
 void Player::UpdateSprite()
 {
     Player::SpriteObject.setPosition(Player::getPosition().x * Game::getScale(),Player::getPosition().y * Game::getScale());
@@ -76,10 +99,20 @@ void Player::Update()
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         desiredVelx = -5;
+        if (Player::Direction != -1)
+        {
+            Player::Direction = -1;
+            Player::Flip(Player::SpriteObject);
+        }
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         desiredVelx = 5;
+        if (Player::Direction != 1)
+        {
+            Player::Direction = 1;
+            Player::Flip(Player::SpriteObject);
+        }
     }
     else
     {

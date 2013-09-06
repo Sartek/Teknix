@@ -16,6 +16,7 @@ public:
     void UpdateSprite();
     void Update();
     void Draw();
+    void Flip(sf::Sprite& sprite);
 private:
     sf::Sprite SpriteObject;
     std::string Texture;
@@ -23,6 +24,8 @@ private:
     b2Body* PhysicsObject;
     b2Fixture* SensorObject;
     MyContactListener* ContactListener;
+    int Direction;
+    sf::IntRect TextureRect;
 };
 
 #endif // PLAYER
