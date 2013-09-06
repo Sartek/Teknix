@@ -21,6 +21,7 @@ private:
     static void GameLoop();
     static void LoadLevel();
     static bool isExiting();
+    static bool isActive();
     static void PollEvent();
     static void Update();
     static void Physics();
@@ -28,6 +29,7 @@ private:
     static void Render();
     static sf::RenderWindow Window;
     static bool Exiting;
+    static bool Active;
     static int Scale;
     static b2World World;
     static TextureManager Textures;

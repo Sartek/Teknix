@@ -5,6 +5,7 @@ int Game::Start()
     Game::Window.create(sf::VideoMode(800,600,32),"Teknix",sf::Style::Close);
     Game::Window.setFramerateLimit(60);
     Game::Exiting = false;
+    Game::Active = true;
     Game::Scale = 32;
     Game::Textures.loadTexture("../res/Box.png");
     Game::Textures.loadTexture("../res/Ground.png");
@@ -41,19 +42,27 @@ void Game::GameLoop()
 {
     while(!Game::isExiting())
     {
-    	Game::ft = Game::dc.restart();
-    	if (Game::ft.asSeconds() > 0.25)
-			Game::ft = sf::seconds(0.25); // Avoid spiral of death
-
-		Game::at += Game::ft.asSeconds();
-
         Game::PollEvent();
-        Game::Update();
-        while(Game::at >= Game::dt)
+        if (Game::isActive())
         {
-			Game::Physics();
-        	Game::at -= dt;
+            Game::ft = Game::dc.restart();
+            if (Game::ft.asSeconds() > 0.25)
+                Game::ft = sf::seconds(0.25); // Avoid spiral of death
+
+            Game::at += Game::ft.asSeconds();
+
+            Game::Update();
+            while(Game::at >= Game::dt)
+            {
+                Game::Physics();
+                Game::at -= dt;
+            }
         }
+        else
+        {
+            Game::dc.restart();
+        }
+
         Game::UpdateSprites();
         Game::Render();
     }
@@ -67,6 +76,10 @@ void Game::PollEvent()
     {
         if (event.type == sf::Event::Closed)
             Game::Exiting = true;
+        if (event.type == sf::Event::LostFocus)
+            Game::Active = false;
+        if (event.type == sf::Event::GainedFocus)
+            Game::Active = true;
     }
 
     Game::Mouse.Update();
@@ -107,6 +120,11 @@ bool Game::isExiting()
     return Exiting;
 }
 
+bool Game::isActive()
+{
+    return Active;
+}
+
 b2World& Game::getWorld()
 {
     return Game::World;
@@ -129,6 +147,7 @@ int Game::getScale()
 
 sf::RenderWindow Game::Window;
 bool Game::Exiting;
+bool Game::Active;
 int Game::Scale;
 b2World Game::World(b2Vec2(0.f,9.8f));
 Player* Game::player;
