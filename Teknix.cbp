@@ -46,7 +46,7 @@
 					<Add library="sfml-system" />
 					<Add library="sfml-window" />
 					<Add library="sfml-graphics" />
-					<Add library="Box2D_R" />
+					<Add library="Box2D" />
 				</Linker>
 			</Target>
 		</Build>
