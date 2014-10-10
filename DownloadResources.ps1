@@ -25,7 +25,7 @@ if(Test-Path -PathType Container "$path\packages")
 }
 else
 {
-    mkdir -p "$path\packages"
+    mkdir -path "$path\packages" >$null
 }
 $client = new-object System.Net.WebClient
 echo "Getting Resource Version"
