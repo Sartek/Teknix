@@ -7,3 +7,5 @@ obj/
 bin/
 res/
 packages/
+.project
+bin-d/
