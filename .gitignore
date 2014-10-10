@@ -3,6 +3,8 @@
 *.depend
 *.layout
 *.o
+*.dll
+*.out
 obj/
 bin/
 res/
