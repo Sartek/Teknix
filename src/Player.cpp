@@ -96,27 +96,23 @@ void Player::Update()
     float desiredVelx = 0;
     float desiredVely = 0;
 
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        desiredVelx = -5;
-        if (Player::Direction != -1)
-        {
-            Player::Direction = -1;
-            Player::Flip(Player::SpriteObject);
-        }
+        desiredVelx += -5;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        desiredVelx = 5;
-        if (Player::Direction != 1)
-        {
+        desiredVelx += 5;
+    }
+
+    if(desiredVelx > 0 && Player::Direction != 1) {
             Player::Direction = 1;
             Player::Flip(Player::SpriteObject);
-        }
-    }
-    else
-    {
-        desiredVelx = 0;
+    } else if(desiredVelx < 0 && Player::Direction !=-1) {
+            Player::Direction = -1;
+            Player::Flip(Player::SpriteObject);
     }
 
     float velChangex = desiredVelx - vel.x;
@@ -127,12 +123,12 @@ void Player::Update()
         desiredVely = -5;
         float velChangey = desiredVely - vel.y;
         float impulsey = Player::PhysicsObject->GetMass() * velChangey;
-        Player::PhysicsObject->ApplyLinearImpulse( b2Vec2(impulsex,impulsey), Player::PhysicsObject->GetWorldCenter() );
+        Player::PhysicsObject->ApplyLinearImpulse( b2Vec2(impulsex,impulsey), Player::PhysicsObject->GetWorldCenter(),true );
         jumpTimeout = 15;
     }
     else
     {
-        Player::PhysicsObject->ApplyLinearImpulse( b2Vec2(impulsex,0), Player::PhysicsObject->GetWorldCenter() );
+        Player::PhysicsObject->ApplyLinearImpulse( b2Vec2(impulsex,0), Player::PhysicsObject->GetWorldCenter(),true );
     }
 
 }
