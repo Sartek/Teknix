@@ -1,13 +1,3 @@
-*.exe
-*.png
-*.depend
-*.layout
-*.o
-*.dll
-*.out
-obj/
 bin/
 res/
-packages/
-.project
-bin-d/
+build/
