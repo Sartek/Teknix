@@ -1,1 +1,2 @@
 Add tiles which are proccessed to fix objects getting stuck and tunneling
+Change player jump trigger
