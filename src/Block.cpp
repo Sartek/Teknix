@@ -1,7 +1,8 @@
 #include "Block.hpp"
 #include "Game.hpp"
 
-Block::Block(b2Vec2 Position,b2Vec2 Size,std::string texture)
+Block::Block(b2Vec2 Position,b2Vec2 Size,std::string texture) :
+    SpriteObject(Game::getTexture(texture))
 {
     b2BodyDef BodyDef;
     BodyDef.position = b2Vec2(Position.x/Game::getScale(), Position.y/Game::getScale());
@@ -17,7 +18,7 @@ Block::Block(b2Vec2 Position,b2Vec2 Size,std::string texture)
     Block::PhysicsObject->CreateFixture(&FixtureDef);
 
     Block::setTexture(texture);
-    SpriteObject.setOrigin(Size.x/2,Size.y/2);
+    SpriteObject.setOrigin({Size.x/2,Size.y/2});
 }
 
 Block::~Block()
@@ -43,8 +44,8 @@ void Block::setTexture(std::string texture)
 
 void Block::UpdateSprite()
 {
-    Block::SpriteObject.setPosition(Block::getPosition().x * Game::getScale(),Block::getPosition().y * Game::getScale());
-    SpriteObject.setRotation(PhysicsObject->GetAngle() * 180/b2_pi);
+    Block::SpriteObject.setPosition({Block::getPosition().x * Game::getScale(),Block::getPosition().y * Game::getScale()});
+    SpriteObject.setRotation(sf::degrees(PhysicsObject->GetAngle() * 180/b2_pi));
 }
 
 void Block::Draw()

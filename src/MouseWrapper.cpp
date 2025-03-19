@@ -42,8 +42,8 @@ void MouseWrapper::Update()
 {
     MouseWrapper::LLEFT = MouseWrapper::LEFT;
     MouseWrapper::LRIGHT = MouseWrapper::RIGHT;
-    MouseWrapper::LEFT = sf::Mouse::isButtonPressed((sf::Mouse::Left));
-    MouseWrapper::RIGHT = sf::Mouse::isButtonPressed((sf::Mouse::Right));
+    MouseWrapper::LEFT = sf::Mouse::isButtonPressed((sf::Mouse::Button::Left));
+    MouseWrapper::RIGHT = sf::Mouse::isButtonPressed((sf::Mouse::Button::Right));
     MouseWrapper::x = sf::Mouse::getPosition(Game::getWindow()).x;
     MouseWrapper::y = sf::Mouse::getPosition(Game::getWindow()).y;
 }

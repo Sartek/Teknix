@@ -2,7 +2,7 @@
 
 int Game::Start()
 {
-    Game::Window.create(sf::VideoMode(800,600,32),"Teknix",sf::Style::Close);
+    Game::Window.create(sf::VideoMode({800,600},32),"Teknix",sf::Style::Close);
     Game::Window.setFramerateLimit(60);
     Game::Exiting = false;
     Game::Active = true;
@@ -70,15 +70,13 @@ void Game::GameLoop()
 
 void Game::PollEvent()
 {
-    sf::Event event;
-
-    while (Window.pollEvent(event))
+    while (const std::optional event = Game::Window.pollEvent())
     {
-        if (event.type == sf::Event::Closed)
+        if (event->is<sf::Event::Closed>())
             Game::Exiting = true;
-        if (event.type == sf::Event::LostFocus)
+        if (event->is<sf::Event::FocusLost>())
             Game::Active = false;
-        if (event.type == sf::Event::GainedFocus)
+        if (event->is<sf::Event::FocusGained>())
             Game::Active = true;
     }
 

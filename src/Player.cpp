@@ -2,7 +2,8 @@
 #include "Game.hpp"
 #include <iostream>
 
-Player::Player(b2Vec2 Position,std::string texture)
+Player::Player(b2Vec2 Position,std::string texture) :
+    SpriteObject(Game::getTexture(texture))
 {
     jumpTimeout = 0;
 
@@ -28,10 +29,12 @@ Player::Player(b2Vec2 Position,std::string texture)
     myFixtureDef.density = 1;
     myFixtureDef.isSensor = true;
     Player::SensorObject = Player::PhysicsObject->CreateFixture(&myFixtureDef);
-    Player::SensorObject->SetUserData((void*)3);
+    //Player::SensorObject->SetUserData((void*)3);
+    //fix this
+    Player::SensorObject->GetUserData().pointer = (uintptr_t)3;
 
     Player::setTexture(texture);
-    SpriteObject.setOrigin(16.f, 24.f);
+    SpriteObject.setOrigin({16.f, 24.f});
     Player::TextureRect = SpriteObject.getTextureRect();
 
     Player::ContactListener = new MyContactListener;
@@ -69,10 +72,10 @@ void Player::Flip(sf::Sprite& sprite)
     {
         sprite.setTextureRect(
             sf::IntRect(
-                sprite.getTextureRect().width, //TODO left+width?
-                0,
-                -sprite.getTextureRect().width,
-                sprite.getTextureRect().height
+                {sprite.getTextureRect().size.x, //TODO left+width?
+                0},
+                {-sprite.getTextureRect().size.x,
+                sprite.getTextureRect().size.y}
             )
         );
     }
@@ -84,8 +87,8 @@ void Player::Flip(sf::Sprite& sprite)
 
 void Player::UpdateSprite()
 {
-    Player::SpriteObject.setPosition(Player::getPosition().x * Game::getScale(),Player::getPosition().y * Game::getScale());
-    SpriteObject.setRotation(PhysicsObject->GetAngle() * 180/b2_pi);
+    Player::SpriteObject.setPosition({Player::getPosition().x * Game::getScale(),Player::getPosition().y * Game::getScale()});
+    SpriteObject.setRotation(sf::degrees(PhysicsObject->GetAngle() * 180/b2_pi));
 }
 
 void Player::Update()
@@ -97,12 +100,12 @@ void Player::Update()
     float desiredVely = 0;
 
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
     {
         desiredVelx += -5;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
     {
         desiredVelx += 5;
     }
@@ -118,7 +121,7 @@ void Player::Update()
     float velChangex = desiredVelx - vel.x;
     float impulsex = Player::PhysicsObject->GetMass() * velChangex;
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && ContactListener->numFootContacts > 0 && jumpTimeout < 1 )
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && ContactListener->numFootContacts > 0 && jumpTimeout < 1 )
     {
         desiredVely = -5;
         float velChangey = desiredVely - vel.y;

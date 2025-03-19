@@ -1,7 +1,8 @@
 #include "GameObject.hpp"
 #include "Game.hpp"
 
-GameObject::GameObject(b2Vec2 Position,std::string texture)
+GameObject::GameObject(b2Vec2 Position,std::string texture) :
+    SpriteObject(Game::getTexture(texture))
 {
     b2BodyDef BodyDef;
     BodyDef.position = b2Vec2(Position.x/Game::getScale(), Position.y/Game::getScale());
@@ -17,7 +18,7 @@ GameObject::GameObject(b2Vec2 Position,std::string texture)
     GameObject::PhysicsObject->CreateFixture(&FixtureDef);
 
     GameObject::setTexture(texture);
-    SpriteObject.setOrigin(16.f, 16.f);
+    SpriteObject.setOrigin({16.f, 16.f});
 }
 
 GameObject::~GameObject()
@@ -43,8 +44,8 @@ void GameObject::setTexture(std::string texture)
 
 void GameObject::UpdateSprite()
 {
-    GameObject::SpriteObject.setPosition(GameObject::getPosition().x * Game::getScale(),GameObject::getPosition().y * Game::getScale());
-    SpriteObject.setRotation(PhysicsObject->GetAngle() * 180/b2_pi);
+    GameObject::SpriteObject.setPosition({GameObject::getPosition().x * Game::getScale(),GameObject::getPosition().y * Game::getScale()});
+    SpriteObject.setRotation(sf::degrees(PhysicsObject->GetAngle() * 180/b2_pi));
 }
 
 void GameObject::Draw()

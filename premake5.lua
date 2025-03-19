@@ -1,7 +1,7 @@
-local libSFML = "../../libaries/c++/bin/SFML/lib"
-local includeSFML = "../../libaries/c++/bin/SFML/include"
-local libBox2D = "../../libaries/c++/bin/Box2D/lib"
-local includeBox2D = "../../libaries/c++/bin/Box2D/include"
+local libSFML = "../dependencies/SFML/build/lib"
+local includeSFML = "../dependencies/SFML/include"
+local libBox2D = "../dependencies/box2d-2.4.2/build/bin"
+local includeBox2D = "../dependencies/box2d-2.4.2/include"
 
 workspace "Teknix"
 	configurations { "Debug", "Release" }
@@ -9,7 +9,7 @@ workspace "Teknix"
 	
 project "Teknix"
 	location "build"
-	kind "WindowedApp"
+	kind "ConsoleApp"
 	language "C++"
 	targetdir "bin"
 	
@@ -18,15 +18,16 @@ project "Teknix"
 	filter "configurations:Debug"
 		defines { "DEBUG" }
 		symbols "On"
-		links { "Debug/Box2D", "sfml-system-d", "sfml-window-d", "sfml-graphics-d" }
-		libdirs { libSFML, libBox2D .. "/Debug" }
+		links { "box2d", "sfml-system-d", "sfml-window-d", "sfml-graphics-d" }
+		libdirs { libSFML, libBox2D }
 		includedirs { includeSFML, includeBox2D }
 		targetsuffix "-d"
 		
 	filter "configurations:Release"
 		defines { "NDEBUG" }
-		flags { "LinkTimeOptimization" }
+		flags { }
+		linktimeoptimization "On"
 		optimize "Full"
-		links { "Box2D", "sfml-system", "sfml-window", "sfml-graphics" }
-		libdirs { libSFML, libBox2D .. "/Release"}
+		links { "box2d", "sfml-system", "sfml-window", "sfml-graphics" }
+		libdirs { libSFML, libBox2D}
 		includedirs { includeSFML, includeBox2D }
